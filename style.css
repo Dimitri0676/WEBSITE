@@ -1,0 +1,402 @@
+/* --- Variables & Core Theme --- */
+:root {
+    --bg-dark: #0f0c29;
+    --bg-mid: #302b63;
+    --bg-light: #24243e;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    
+    /* Neon Accents */
+    --accent-main: #ff003c; /* Cyberpunk Red */
+    --accent-glow: rgba(255, 0, 60, 0.6);
+    
+    /* Brand Colors for Hover Effects */
+    --kick-color: #53FC18;
+    --twitch-color: #9146FF;
+    --youtube-color: #FF0000;
+    --discord-color: #5865F2;
+    --twitter-color: #1DA1F2;
+    --instagram-color: #E1306C;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: #050505; /* Deep space fallback */
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* --- Enter Screen Overlay --- */
+.enter-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0a0814;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.enter-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.enter-content {
+    text-align: center;
+    animation: pulseText 2s infinite;
+}
+
+.enter-content h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.enter-content p {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.enter-content .click-hint {
+    font-size: 1rem;
+    color: var(--accent-main);
+    margin-top: 1rem;
+}
+
+@keyframes pulseText {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
+/* --- Background Video --- */
+.background-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: -2;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 8, 20, 0.6); /* Dark tint to make text readable */
+    z-index: -1;
+}
+
+/* --- Music Button --- */
+.music-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 1s ease backwards;
+    animation-delay: 1s;
+}
+
+.music-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--accent-glow);
+    border-color: var(--accent-main);
+}
+
+.music-btn.playing {
+    color: var(--accent-main);
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px rgba(255, 0, 60, 0.2); }
+    50% { box-shadow: 0 0 25px rgba(255, 0, 60, 0.6); }
+    100% { box-shadow: 0 0 10px rgba(255, 0, 60, 0.2); }
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    z-index: 1; /* Keep above grid */
+    position: relative;
+}
+
+/* --- Header & Profile --- */
+header {
+    margin-bottom: 2rem;
+    animation: fadeInDown 1s ease-out;
+}
+
+.avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem;
+    animation: floatAvatar 4s ease-in-out infinite;
+}
+
+@keyframes floatAvatar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Glowing ring behind avatar */
+.avatar-container::before {
+    content: '';
+    position: absolute;
+    top: -5px; right: -5px; bottom: -5px; left: -5px;
+    background: linear-gradient(45deg, #ff003c, #00d2ff, #ff003c);
+    border-radius: 50%;
+    z-index: -1;
+    animation: spinGlow 3s linear infinite;
+    filter: blur(10px);
+    opacity: 0.8;
+}
+
+@keyframes spinGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.profile-pic {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 3px solid #111;
+    transition: transform 0.3s ease;
+    display: block;
+    object-fit: cover; /* يضمن عدم تشوه الصورة مهما كانت أبعادها */
+    background-color: #111; /* خلفية احتياطية في حال تأخر تحميل الصورة */
+}
+
+.profile-pic:hover {
+    transform: scale(1.05);
+}
+
+.username {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px var(--accent-glow);
+    text-transform: uppercase;
+}
+
+.bio {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+/* --- Link Buttons --- */
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 1.2rem 2rem;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    animation: fadeInUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+}
+
+/* Staggered entrance animation for links */
+.link-btn:nth-child(1) { animation-delay: 0.1s; }
+.link-btn:nth-child(2) { animation-delay: 0.2s; }
+.link-btn:nth-child(3) { animation-delay: 0.3s; }
+.link-btn:nth-child(4) { animation-delay: 0.4s; }
+.link-btn:nth-child(5) { animation-delay: 0.5s; }
+.link-btn:nth-child(6) { animation-delay: 0.6s; }
+
+.link-btn i, .link-btn svg {
+    position: absolute;
+    left: 1.5rem;
+    font-size: 1.8rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    transition: all 0.3s ease;
+}
+
+.link-btn span {
+    z-index: 1; /* Keep text above hover sweep */
+}
+
+/* Original Brand Colors for Icons */
+.link-btn.kick svg { color: var(--kick-color); }
+.link-btn.twitch i { color: var(--twitch-color); }
+.link-btn.youtube i { color: var(--youtube-color); }
+.link-btn.discord i { color: var(--discord-color); }
+.link-btn.twitter i { color: var(--twitter-color); }
+.link-btn.instagram i { 
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Shine Hover Effect */
+.link-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+    z-index: 0;
+}
+
+.link-btn:hover::before {
+    left: 100%;
+}
+
+/* General Hover State */
+.link-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px) scale(1.02);
+    letter-spacing: 3px;
+}
+
+/* Active/Click State */
+.link-btn:active {
+    transform: translateY(2px) scale(0.95);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
+    transition: all 0.1s ease;
+}
+
+.link-btn:hover i, .link-btn:hover svg {
+    transform: scale(1.2);
+}
+
+/* Brand Specific Colors on Hover */
+.link-btn.kick:hover { 
+    border-color: var(--kick-color); 
+    box-shadow: 0 0 20px rgba(83, 252, 24, 0.5); 
+    text-shadow: 0 0 5px var(--kick-color);
+}
+.link-btn.twitch:hover { 
+    border-color: var(--twitch-color); 
+    box-shadow: 0 0 20px rgba(145, 70, 255, 0.5); 
+    text-shadow: 0 0 5px var(--twitch-color);
+}
+.link-btn.youtube:hover { 
+    border-color: var(--youtube-color); 
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); 
+    text-shadow: 0 0 5px var(--youtube-color);
+}
+.link-btn.discord:hover { 
+    border-color: var(--discord-color); 
+    box-shadow: 0 0 20px rgba(88, 101, 242, 0.5); 
+    text-shadow: 0 0 5px var(--discord-color);
+}
+.link-btn.twitter:hover { 
+    border-color: var(--twitter-color); 
+    box-shadow: 0 0 20px rgba(29, 161, 242, 0.5); 
+    text-shadow: 0 0 5px var(--twitter-color);
+}
+.link-btn.instagram:hover { 
+    border-color: var(--instagram-color); 
+    box-shadow: 0 0 20px rgba(225, 48, 108, 0.5); 
+    text-shadow: 0 0 5px var(--instagram-color);
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4);
+    animation: fadeInUp 1s ease-out 0.8s backwards;
+}
+
+/* --- Entrance Animations --- */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px) scale(0.8); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+    body { padding: 1.5rem 1rem; }
+    .profile-pic { width: 110px; height: 110px; }
+    .username { font-size: 1.6rem; }
+    .bio { font-size: 1.05rem; padding: 0 1rem; }
+    .link-btn { font-size: 1.1rem; padding: 1rem 1.2rem; }
+    .link-btn i, .link-btn svg { left: 1rem; font-size: 1.5rem; width: 1.5rem; height: 1.5rem; }
+}
+
+@media (max-width: 380px) {
+    .profile-pic { width: 95px; height: 95px; }
+    .username { font-size: 1.4rem; }
+    .bio { font-size: 0.95rem; }
+    .link-btn { font-size: 1rem; padding: 0.9rem 1rem; }
+    .link-btn i, .link-btn svg { left: 0.8rem; font-size: 1.3rem; width: 1.3rem; height: 1.3rem; }
+}
