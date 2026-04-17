@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamer Links | My Socials</title>
+    
+    <!-- Google Fonts for a Gamer/Sci-Fi look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- Enter Screen Overlay -->
+    <div id="enter-screen" class="enter-screen">
+        <div class="enter-content">
+            <h2>DIMITRIDRAGANOV</h2>
+            <p>Click anywhere to enter</p>
+            <p class="click-hint"><i class="fa-solid fa-volume-high"></i> Turn on sound</p>
+        </div>
+    </div>
+
+    <!-- Background Video -->
+    <video id="bg-video" loop playsinline class="background-video">
+        <source src="my-video.mp4" type="video/mp4">
+    </video>
+    
+    <!-- Dark Overlay for better text readability -->
+    <div class="video-overlay"></div>
+
+    <!-- Sound Toggle Button -->
+    <button id="music-toggle" class="music-btn" title="Toggle Sound">
+        <i class="fa-solid fa-volume-xmark"></i>
+    </button>
+
+    <div class="container">
+        <!-- Profile Header -->
+        <header>
+            <div class="avatar-container">
+                <!-- ضع صورتك في نفس المجلد واسمها logo.png -->
+                <img src="logo.png" alt="Profile Avatar" class="profile-pic">
+            </div>
+            <h1 class="username">DIMITRIDRAGANOV</h1>
+            <p class="bio">Leveling up in life and games 🎮 </p>
+        </header>
+
+        <!-- Link Buttons -->
+        <main class="links">
+            <a href="https://kick.com/dimitridraganov" target="_blank" class="link-btn kick">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4 2h5v6h2V6h2V4h2V2h5v6h-3v2h-2v2h-2v4h2v2h2v2h3v6h-5v-6h-2v-2h-2v-2h-2v6H4V2z" />
+                </svg>
+                <span>Kick</span>
+            </a>
+         
+            <a href="https://www.youtube.com/@DimiTtriDRAGANOV" target="_blank" class="link-btn youtube">
+                <i class="fa-brands fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+            
+            <a href="https://discord.gg/6cCU537A7m" target="_blank" class="link-btn discord">
+                <i class="fa-brands fa-discord"></i>
+                <span>Discord Server</span>
+            </a>
+            
+           
+         
+
+        </main>
+        
+        <footer>
+            <p>MADE BY DIMITRI </p>
+        </footer>
+    </div>
+
+    <!-- Sound Control Script -->
+    <script>
+        const video = document.getElementById('bg-video');
+        const soundBtn = document.getElementById('music-toggle');
+        const soundIcon = soundBtn.querySelector('i');
+        const enterScreen = document.getElementById('enter-screen');
+        
+        let isMuted = false;
+        
+        // تخفيض مستوى الصوت إلى 30% (يمكنك تعديل هذه القيمة من 0.0 إلى 1.0)
+        video.volume = 0.5;
+
+        // دالة التحكم بالصوت من الزر الجانبي
+        function toggleSound() {
+            if (isMuted) {
+                video.muted = false;
+                video.play().catch(e => console.log(e)); 
+                soundIcon.className = 'fa-solid fa-volume-high';
+                soundBtn.classList.add('playing');
+            } else {
+                video.muted = true;
+                soundIcon.className = 'fa-solid fa-volume-xmark';
+                soundBtn.classList.remove('playing');
+            }
+            isMuted = !isMuted;
+        }
+
+        // حدث شاشة الدخول (أفضل وأنجح طريقة للتشغيل التلقائي)
+        enterScreen.addEventListener('click', () => {
+            // إخفاء شاشة الدخول
+            enterScreen.classList.add('hidden');
+            
+            // تشغيل الفيديو والصوت معاً
+            video.muted = false;
+            isMuted = false;
+            let playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => console.log(error));
+            }
+            
+            // تحديث شكل الزر ليكون مفتوحاً
+            soundIcon.className = 'fa-solid fa-volume-high';
+            soundBtn.classList.add('playing');
+        });
+
+        // حدث النقر على الزر السفلي
+        soundBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleSound();
+        });
+    </script>
+</body>
+</html>
